@@ -6,7 +6,7 @@ Say `/hire` in a Topclass chat. Your agent asks:
 
 For example, you could reply: “I want an agent to develop my brand and guide its design.”
 
-Reply in your own words. There is no menu of job titles or predefined agent types. A role, goal, project or examples of work can all express the purpose. The AI identifies the foundations, supporting subjects and specializations needed for that purpose, reads the course JSONL library, chooses courses and documented books, and **fills the approved education HTML**. Open it to add or remove courses, choose must-have or optional, and see the resulting books and missing coverage.
+Reply in your own words. There is no menu of job titles or predefined agent types. A role, goal, project or examples of work can all express the purpose. The AI identifies the foundations, supporting subjects and specializations needed for that purpose, reads the course JSONL library, chooses courses and documented books, and **fills the approved education HTML**. Open it to add or remove courses, and see the resulting books and missing coverage.
 
 Save your choices and return the file to the chat. The AI gives you the selected book list and edits the HTML for any further changes. After confirmation, Topclass searches for the books and, with your Google key configured once, automatically indexes available original material for this agent. A degree plan, full prerequisite chain and learning schedule are not required. Authors, editions and ISBNs are optional extras, not selection requirements. Obvious devices such as iClicker remotes are excluded from learning-book views while the original records remain available as evidence. Books and provider keys are not needed to choose the education. A hire creates a private education workspace, not an autonomous running bot or learned knowledge.
 
@@ -14,7 +14,7 @@ Save your choices and return the file to the chat. The AI gives you the selected
 
 | AI host agent | Code tools | User |
 |---|---|---|
-| Interprets the purpose, explores foundations and specializations, reads course evidence, chooses courses and priorities, explains gaps, creates and edits HTML. | Expose the complete saved course catalog, paginate or apply explicit literal filters, validate IDs and quotes, preserve private memory, check saved choices and update book data. | Describes the purpose in their own words, edits must-have/optional choices, confirms the choices, and reviews checked books and remaining links. |
+| Interprets the purpose, explores foundations and specializations, reads course evidence, chooses courses, explains gaps, creates and edits HTML. | Expose the complete saved course catalog, paginate or apply explicit literal filters, validate IDs and quotes, preserve private memory, check saved choices and update book data. | Describes the purpose in their own words, adds or removes courses, confirms the choices, and reviews checked books and remaining links. |
 
 **The hire path has no automatic candidate search, relevance ranking, top-N shortlist, priority assignment, or HTML generator.** A course is included only when the AI explicitly chooses its ID. Even if several courses address the same skill, code preserves every choice and its order. Quotes are mechanically checked, but relevance remains the AI's judgment. The older automatic matching CLI remains for compatibility; `/hire` does not use it.
 
@@ -82,7 +82,6 @@ The AI proposal has this structure (IDs and quotes below are illustrative):
 {
   "courses": [{
     "course_id": "EXACT_CATALOG_ID",
-    "priority": "must-have",
     "reviews": [{
       "course_id": "EXACT_CATALOG_ID",
       "requirement": "Exact capability description from the brief",
@@ -95,11 +94,11 @@ The AI proposal has this structure (IDs and quotes below are illustrative):
 }
 ```
 
-Choose for an already capable LLM: must-haves contribute substantial knowledge directly useful to the purpose, while optional courses add relevant depth around those choices. Generic basics such as introductory Python should normally be low-priority, unselected alternatives. Avoid redundant reference content; explore specialist and adjacent options rather than stopping at a small generic list. Course titles and university prerequisite chains do not determine priority.
+Choose 10 relevant book-backed courses for an already capable LLM, or explain a genuine catalog shortfall. Each suggestion should add useful depth; avoid redundant basics and irrelevant filler. All suggestions start selected. The user adds or removes courses; there are no course priority tiers.
 
-Priority is `must-have`, `supplemental` (optional), or `alternative` (available to add, not preselected). Review decisions distinguish direct `essential` support from `supplemental` foundations or partial support. A high selection priority does not erase a partial-evidence gap. The validator checks identity, quotes, requirements and named-book eligibility, not the truth of the AI's relevance reasoning. Alternatives are chosen by AI as well. No heuristic adds courses behind its back.
+New proposal rows contain `course_id` and `reviews`. Evidence review decisions still distinguish direct `essential` support from `supplemental` foundations or partial support; these assess evidence, not selectable course tiers. The validator checks identity, quotes, requirements and named-book eligibility, not the truth of the AI's relevance reasoning. Legacy proposals and choices with priority fields remain readable for compatibility. New browser exports contain only course IDs.
 
-`plan` writes the validated plan, candidate evidence and `planner-data.json`; it does not write HTML. The AI copies the returned `education_template` (`docs/templates/asterium.html`) into the private HTML destination and replaces only the validated DATA and role PROFILE JSON placeholders with script-safe escapes. `check` verifies data equality, the role profile, the initial 10-course recommendation (or explained shortfall), and every noneditable byte of the approved template. See [the presentation contract](presentation.md). Add/remove, optional/must-have, book dialogs and snapshot-bound saved-choice import/export remain available. After `select`, update the exact DATA payload and preserve the valid profile in a fresh copy of the approved template. The tool distinguishes pending selection from pending HTML preparation.
+`plan` writes the validated plan, candidate evidence and `planner-data.json`; it does not write HTML. The AI copies the returned `education_template` (`docs/templates/asterium.html`) into the private HTML destination and replaces only the validated DATA and role PROFILE JSON placeholders with script-safe escapes. `check` verifies data equality, the role profile, the initial 10-course recommendation (or explained shortfall), and every noneditable byte of the approved template. See [the presentation contract](presentation.md). Add/remove, book dialogs and snapshot-bound saved-choice import/export remain available. After `select`, update the exact DATA payload and preserve the valid profile in a fresh copy of the approved template. The tool distinguishes pending selection from pending HTML preparation.
 
 ## Private memory and durable choices
 

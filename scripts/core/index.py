@@ -11,7 +11,7 @@ from core.provider import ProviderDeferred
 from core.sources import regions
 
 
-def index_originals(graph, provider, source_ids, batch_size=8):
+def index_originals(graph, provider, source_ids, batch_size=8, progress=None):
     if not isinstance(source_ids, list) or not source_ids or len(set(source_ids)) != len(source_ids):
         raise ValueError("Provide distinct registered source IDs")
     if isinstance(batch_size, bool) or not isinstance(batch_size, int) or not 1 <= batch_size <= 16:
@@ -45,6 +45,9 @@ def index_originals(graph, provider, source_ids, batch_size=8):
                     skipped += 1
                 else:
                     pending.append(unit)
+    total_units = skipped + len(pending)
+    if progress:
+        progress({"completed_units": skipped, "total_units": total_units})
     indexed, deferred, offset = 0, None, 0
     try:
         while offset < len(pending) and (provider.max_requests is None or provider.attempts < provider.max_requests):
@@ -63,6 +66,8 @@ def index_originals(graph, provider, source_ids, batch_size=8):
                     graph.put_vector(unit["id"], provider.space, vector)
             indexed += len(batch)
             offset += len(batch)
+            if progress:
+                progress({"completed_units": skipped + indexed, "total_units": total_units})
     except ProviderDeferred as exc:
         deferred = {"reason": exc.reason, "next_attempt_at": exc.next_attempt_at}
     finally:

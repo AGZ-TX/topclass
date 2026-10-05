@@ -53,9 +53,9 @@ def apply_selection(plan, selection, candidates=None):
     chosen, seen = [], set()
     original_ids = {item['course']['id'] for item in plan.get('courses', [])}
     for item in requested:
-        if not isinstance(item, dict) or set(item) != {'course_id', 'priority'}:
-            raise ValueError('Only course ID and priority can be edited')
-        key, priority = item['course_id'], item['priority']
+        if not isinstance(item, dict) or set(item) not in ({'course_id'}, {'course_id', 'priority'}):
+            raise ValueError('Only course IDs can be selected; legacy priority is accepted for compatibility')
+        key, priority = item['course_id'], item.get('priority', 'must-have')
         if not isinstance(key, str) or key not in pool or key in seen or not isinstance(priority, str) or priority not in {'must-have', 'supplemental'}:
             raise ValueError('Unknown, duplicate, or invalid course selection')
         seen.add(key)

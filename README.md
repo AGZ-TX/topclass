@@ -16,7 +16,7 @@ Replace the example with your tasks and field of work. You can also use `$hire` 
 
 1. Answer: “What is your agent's purpose?”
 2. Review the course page. Your agent suggests 10 useful courses, or explains why it found fewer.
-3. Add or remove courses. Set each course to must-have or optional.
+3. Add or remove courses. All suggestions start selected; there are no course tiers.
 4. Press **Start**. Give the saved choices to your agent.
 5. Ask your agent to confirm the choices. Topclass finds and indexes available books for that agent.
 
