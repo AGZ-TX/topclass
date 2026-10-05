@@ -16,15 +16,15 @@ The semantic graph links sources, sections, pages, and retrieval units. It also 
 
 ## One-time Google setup
 
-Install `requirements-education.txt` in the Python environment used by Topclass, and prepare the connected [book search](books.md). Then use a hidden prompt:
+Install `scripts/requirements.txt` in the Python environment used by Topclass, and prepare the connected [book search](books.md). Then use a hidden prompt:
 
 ```sh
-./topclass google
+./scripts/topclass google
 ```
 
-Add a backup through `./topclass google --fallback`. A different-project backup can continue after the primary reaches Google quota; same-project keys share Google quota. Topclass imposes no daily usage, spending or rate caps; attempts remain recorded across keys. Every actual attempt, including a failed primary followed by a successful backup, is recorded. Completed primary and backup responses remain cached; all-key exhaustion keeps a resumable wait. Invalid requests, credential errors and unknown outcomes do not silently trigger key rotation.
+Add a backup through `./scripts/topclass google --fallback`. A different-project backup can continue after the primary reaches Google quota; same-project keys share Google quota. Topclass imposes no daily usage, spending or rate caps; attempts remain recorded across keys. Every actual attempt, including a failed primary followed by a successful backup, is recorded. Completed primary and backup responses remain cached; all-key exhaustion keeps a resumable wait. Invalid requests, credential errors and unknown outcomes do not silently trigger key rotation.
 
-A host can instead pass `--key-file /private/path/google-key` or use `GEMINI_API_KEY`. Never pass the key value in command arguments. The private key is stored with owner-only permissions outside tracked files. Configuration contains credential bindings and provider settings, not the key. Repeating setup preserves usage history and completed caches. Key setup never launches or changes agent queues; use `./topclass work --agent AGENT_ID` to resume one chosen agent.
+A host can instead pass `--key-file /private/path/google-key` or use `GEMINI_API_KEY`. Never pass the key value in command arguments. The private key is stored with owner-only permissions outside tracked files. Configuration contains credential bindings and provider settings, not the key. Repeating setup preserves usage history and completed caches. Key setup never launches or changes agent queues; use `./scripts/topclass work --agent AGENT_ID` to resume one chosen agent.
 
 Google provider state is shared for accounting across this user's hires. Original material, embeddings, graphs, page indexes, queues and logs belong to one explicit agent. There is no shared default source memory. Setup enables subsequent Google embedding calls, which can incur charges. Google enforces quota, and configured backup keys are tried immediately after a provider quota error. Topclass has no daily request/token, spending or invented rate caps. Existing local-limit profiles are migrated without losing caches or usage records. Price estimates are informational; the project’s actual billing tier and remaining quota are unknown. See [provider limits](limits.md).
 
@@ -42,14 +42,14 @@ The worker performs these steps without reading-model calls:
 
 Completed vectors are reused. Queues retain pending, running, deferred, complete, excluded, unsupported and failed states. Scheduled quota deferrals resume automatically while the worker runs. A per-agent lock prevents duplicate workers; shared provider accounting coordinates calls across hires. Interrupted unknown provider outcomes require review before retry. Terminal failures retain an explanation rather than restarting an unlimited billed loop.
 
-The worker runs as a local background process until its queue has no resumable jobs. Long provider quota waits stay deferred, preserve completed work, and continue after the scheduled retry without repeated calls during the wait. A stopped environment cannot keep processing. `/recall` restarts resumable pending work; hosts can also run `./topclass work --agent ID`. Native navigation and original passages remain available before every embedding finishes. Completed cached provider responses remain available during quota waits; other requests for the same project/model share the cooldown. Actual attempt accounting is retained across retry windows.
+The worker runs as a local background process until its queue has no resumable jobs. Long provider quota waits stay deferred, preserve completed work, and continue after the scheduled retry without repeated calls during the wait. A stopped environment cannot keep processing. `/recall` restarts resumable pending work; hosts can also run `./scripts/topclass work --agent ID`. Native navigation and original passages remain available before every embedding finishes. Completed cached provider responses remain available during quota waits; other requests for the same project/model share the cooldown. Actual attempt accounting is retained across retry windows.
 
 ```sh
-./topclass status --agent AGENT_ID
-./topclass work --agent AGENT_ID
-./topclass recall --agent AGENT_ID --query 'What affects wear in a sliding seal?'
-./topclass recall --agent AGENT_ID --region REGION_ID
-./topclass recall --agent AGENT_ID --source SOURCE_ID
+./scripts/topclass status --agent AGENT_ID
+./scripts/topclass work --agent AGENT_ID
+./scripts/topclass recall --agent AGENT_ID --query 'What affects wear in a sliding seal?'
+./scripts/topclass recall --agent AGENT_ID --region REGION_ID
+./scripts/topclass recall --agent AGENT_ID --source SOURCE_ID
 ```
 
 Private state includes `index-queue.json`, `index-worker.log`, `sources/`, `pageindex/` and `knowledge.db` inside that agent's directory. Provider keys, runtime databases, original books, page images and excerpts must remain outside Git.
@@ -68,17 +68,17 @@ See [the five-library trial](reports/recall.md) for actual fresh-agent answers, 
 
 ## Review and focused expansion
 
-`./topclass review --agent AGENT_ID` checks retained source/asset integrity, current text-unit and vector coverage, figure registration and image embeddings. Query results also include source indexing health without repeating a full integrity audit. These reports explicitly leave answer quality unverified: saved vectors do not prove that every question can be answered.
+`./scripts/topclass review --agent AGENT_ID` checks retained source/asset integrity, current text-unit and vector coverage, figure registration and image embeddings. Query results also include source indexing health without repeating a full integrity audit. These reports explicitly leave answer quality unverified: saved vectors do not prove that every question can be answered.
 
-Use `./topclass recall --agent AGENT_ID --source SOURCE_ID --section NODE_ID` for bounded original section context. Follow `continue_region_id` and `continue_offset` with `--start REGION_ID --offset N` on the same section. A paragraph crossing a page or unit boundary remains accessible without pasting the whole chapter. The host should follow these handles until the necessary procedure, conditions, exception or example is complete.
+Use `./scripts/topclass recall --agent AGENT_ID --source SOURCE_ID --section NODE_ID` for bounded original section context. Follow `continue_region_id` and `continue_offset` with `--start REGION_ID --offset N` on the same section. A paragraph crossing a page or unit boundary remains accessible without pasting the whole chapter. The host should follow these handles until the necessary procedure, conditions, exception or example is complete.
 
-Use `./topclass recall --agent AGENT_ID --region REGION_ID --visual` to render a PDF page from its original at three pixels per point. Add `--crop X0 Y0 X1 Y1` in original page coordinates for tiny chart labels or equations. This reads the original PDF rather than enlarging the saved thumbnail; pixel limits keep requests bounded. Raster-only source figures retain their actual available detail. No renderer or embedding model can recover information absent from the supplied source.
+Use `./scripts/topclass recall --agent AGENT_ID --region REGION_ID --visual` to render a PDF page from its original at three pixels per point. Add `--crop X0 Y0 X1 Y1` in original page coordinates for tiny chart labels or equations. This reads the original PDF rather than enlarging the saved thumbnail; pixel limits keep requests bounded. Raster-only source figures retain their actual available detail. No renderer or embedding model can recover information absent from the supplied source.
 
 Retained HTML figures from older captured sections are automatically registered when that source is explicitly indexed again. Completed unrelated sources and other agents are not silently re-embedded. Existing private indices are preserved. See [the single-agent review](reports/memory.md) for checks and limits.
 
 ## Live processing page
 
-`./topclass live --agent AGENT_ID` opens a read-only, agent-scoped service on an ephemeral localhost port. Open its printed URL to view the current canonical education page in processing mode. Author and validate that page with `check` first; older pages must be rebuilt from their saved planner data and profile. The service does not select courses, acquire books, start workers, or resume unrelated queues. Use the normal confirmed-book or `/add` workflow to start work.
+`./scripts/topclass live --agent AGENT_ID` opens a read-only, agent-scoped service on an ephemeral localhost port. Open its printed URL to view the current canonical education page in processing mode. Author and validate that page with `check` first; older pages must be rebuilt from their saved planner data and profile. The service does not select courses, acquire books, start workers, or resume unrelated queues. Use the normal confirmed-book or `/add` workflow to start work.
 
 The page polls the private service automatically. The URL contains a random access token; keep it private and stop the service with Ctrl-C when finished. The server binds only to 127.0.0.1, checks Host and Origin, refuses cross-site browser reads, disables caching and framing, and exposes only the selected agent's page and status. It serves no filesystem paths, originals, or credentials. Detailed failure reasons remain in private CLI status because provider errors may contain private paths.
 

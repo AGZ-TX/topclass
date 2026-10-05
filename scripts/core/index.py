@@ -115,7 +115,7 @@ def semantic_links(graph, source_ids, space, neighbors=3):
     try:
         import numpy as np
     except ImportError as exc:
-        raise ValueError("Semantic links require requirements-education.txt") from exc
+        raise ValueError("Semantic links require scripts/requirements.txt") from exc
 
     if not isinstance(source_ids, list) or not source_ids or not isinstance(space, str) or not space:
         raise ValueError("Provide source IDs and their explicit embedding space")

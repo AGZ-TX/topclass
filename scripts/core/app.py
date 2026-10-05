@@ -416,7 +416,7 @@ def install_skills(destination, host):
         path.mkdir(parents=True)
         save(path / 'SKILL.md', skill_content(ROOT, path.name))
     return {'installed': [str(path) for path in paths], 'host': host,
-            'next': 'Reload host skills. Claude uses /hire; Codex uses $hire or its skills menu. In this repository, /hire also routes through AGENTS.md.'}
+            'next': 'Reload host skills. Claude uses /hire; Codex uses $hire or its skills menu. In this repository, /hire also routes through docs/AGENTS.md.'}
 
 
 def main(argv=None):

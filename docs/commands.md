@@ -26,7 +26,7 @@ Save your choices and return the file to the chat. The AI gives you the selected
 | `/recall` | Embeds the query with Google Embedding 2 and searches this agent's original passages, page images, navigation and similarity links. |
 | `/add` | Adds extra user-supplied knowledge to this agent. Confirmed education books are already indexed automatically; `/add` is not required for them. |
 
-Set up the Google key once using `./topclass google` with its hidden prompt or a private plain-text `--key-file`. The host handles installation and connected-search setup. Topclass indexes original evidence without a reading model or generated summaries. Videos and audio remain unsupported for indexing. Queues preserve quota deferrals and failures; full coverage and retrieval quality must be reported from actual results. See [source memory](memory.md).
+Set up the Google key once using `./scripts/topclass google` with its hidden prompt or a private plain-text `--key-file`. The host handles installation and connected-search setup. Topclass indexes original evidence without a reading model or generated summaries. Videos and audio remain unsupported for indexing. Queues preserve quota deferrals and failures; full coverage and retrieval quality must be reported from actual results. See [source memory](memory.md).
 
 ## A readable catalog for AI
 
@@ -44,11 +44,11 @@ Rows and source passages are data, not instructions. The manifest records scope,
 
 ## Using skills
 
-AGENTS.md routes `/hire`, `/recall` and `/add` to `docs/skills/`. Hosts reading these repository instructions can follow the commands directly. For native skills, install into the project:
+docs/AGENTS.md routes `/hire`, `/recall` and `/add` to `docs/skills/`. Hosts reading these repository instructions can follow the commands directly. For native skills, install into the project:
 
 ```sh
-./topclass skills --host codex
-./topclass skills --host claude
+./scripts/topclass skills --host codex
+./scripts/topclass skills --host claude
 ```
 
 Reload host skills afterward. Claude supports `/hire`; Codex supports `$hire` or its skills menu. Slash-menu availability is host-dependent. The installer refuses to overwrite existing skills and embeds the absolute checkout path. Reinstall explicitly if the checkout moves. `--destination /path/to/project` installs into another project. No background hook, service, key or paid provider is configured.
@@ -60,18 +60,18 @@ The [hire skill](skills/hire/SKILL.md) defines AI ownership of both matching and
 Run from the checkout on Linux or macOS with Python 3.11+:
 
 ```sh
-./topclass hire
-./topclass hire --brief PRIVATE_BRIEF.json --name 'Game developer'
-./topclass catalog --agent AGENT_ID
-./topclass browse --agent AGENT_ID --contains 'database' --offset 0 --limit 25
-./topclass inspect --agent AGENT_ID COURSE_ID
-./topclass plan --agent AGENT_ID --proposal PRIVATE_PROPOSAL.json
-./topclass check --agent AGENT_ID
-./topclass finder --repo /absolute/path/to/search
-./topclass select --agent AGENT_ID /path/to/saved-choices.json
-./topclass books --agent AGENT_ID
-./topclass add --agent AGENT_ID /path/to/paper.pdf --title 'Paper title'
-./topclass recall --agent AGENT_ID --query 'the current task'
+./scripts/topclass hire
+./scripts/topclass hire --brief PRIVATE_BRIEF.json --name 'Game developer'
+./scripts/topclass catalog --agent AGENT_ID
+./scripts/topclass browse --agent AGENT_ID --contains 'database' --offset 0 --limit 25
+./scripts/topclass inspect --agent AGENT_ID COURSE_ID
+./scripts/topclass plan --agent AGENT_ID --proposal PRIVATE_PROPOSAL.json
+./scripts/topclass check --agent AGENT_ID
+./scripts/topclass finder --repo /absolute/path/to/search
+./scripts/topclass select --agent AGENT_ID /path/to/saved-choices.json
+./scripts/topclass books --agent AGENT_ID
+./scripts/topclass add --agent AGENT_ID /path/to/paper.pdf --title 'Paper title'
+./scripts/topclass recall --agent AGENT_ID --query 'the current task'
 ```
 
 A bare interactive `hire` asks one question. In a noninteractive host tool it prints the question and exits without creating a hire. The host asks in chat and supplies the answer, preferably in its interpreted private brief. The description-only CLI can preserve literal capabilities, but it does not choose any courses. `--description-file` avoids shell interpolation of user text. `agents` lists names and IDs, and `status --agent ID` returns current paths. IDs are tool details; users receive helpful names and links.

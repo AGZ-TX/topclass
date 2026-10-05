@@ -1,5 +1,7 @@
 # Topclass
 
+**AI agents:** Read [the agent instructions](docs/AGENTS.md) before setup or changes.
+
 Give your AI agent useful books for the work you need.
 
 Tell the agent its purpose. It suggests university courses and books. You choose the courses on a web page. Topclass then finds available books and makes them searchable for that agent.
@@ -42,13 +44,13 @@ cd topclass
 On macOS or Linux:
 
 ```sh
-./topclass setup --host codex
+./scripts/topclass setup --host codex
 ```
 
 On Windows PowerShell:
 
 ```powershell
-.\topclass.cmd setup --host codex
+.\scripts\topclass.cmd setup --host codex
 ```
 
 For Claude, change `codex` to `claude`. Open this project in your AI app and reload its skills.
@@ -75,6 +77,12 @@ Clean installation checks passed for Codex and Claude on all three operating sys
 
 ## License
 
-Topclass code uses the [MIT license](LICENSE). The included book finder keeps its [license](scripts/finder/LICENSE) and [source record](scripts/finder/origin.json).
+Topclass code uses the [MIT license](docs/LICENSE). The included book finder keeps its [license](scripts/finder/LICENSE) and [source record](scripts/finder/origin.json).
 
 Source links credit the universities and book providers. No university endorses Topclass. Read the [source notice](data/NOTICE.md).
+
+## Files
+
+`data/` holds the catalog. `docs/` holds guides, agent instructions, the license and security policy. `scripts/` holds the code, launchers and dependency list. `.gitignore` keeps private files and generated files out of normal commits.
+
+After updating an older checkout, use `./scripts/topclass` (Windows: `.\scripts\topclass.cmd`) and refresh previously installed skills using [the setup guide](docs/setup.md).

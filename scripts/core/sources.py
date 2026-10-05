@@ -48,7 +48,7 @@ def register(graph, path, private_dir, title, edition, origin="", resource_id=No
             try:
                 import fitz
             except ImportError as exc:
-                raise ValueError("PDF ingestion requires PyMuPDF; install requirements-education.txt") from exc
+                raise ValueError("PDF ingestion requires PyMuPDF; install scripts/requirements.txt") from exc
             with fitz.open(original) as document:
                 if document.needs_pass:
                     raise ValueError("Encrypted PDF requires an unlocked user-supplied copy")

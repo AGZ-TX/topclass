@@ -183,11 +183,12 @@ def export(destination, root=ROOT, catalog=None):
         paths.extend((root / 'scripts').glob('*.sql'))
         tracked = subprocess.check_output(['git', 'ls-files', '-z', 'scripts/finder'], cwd=root).decode().split('\0')
         paths.extend(root / name for name in tracked if name)
-        paths.extend(root / name for name in ('topclass', 'topclass.cmd', 'LICENSE', '.gitignore', '.gitattributes',
-                                              'requirements.txt', 'requirements-education.txt', 'SECURITY.md'))
+        paths.extend(root / name for name in ('scripts/topclass', 'scripts/topclass.cmd', 'docs/LICENSE', '.gitignore',
+                                              'data/.gitattributes', 'docs/.gitattributes', 'scripts/.gitattributes',
+                                              'scripts/requirements.txt', 'docs/SECURITY.md'))
         paths.extend(root / ('scripts/' + name + '.py') for name in ('topclass', 'source_pipeline', 'source_index',
             'source_retrieval', 'source_education', 'provider_runtime', 'book_search', 'education_graph', 'education_planner', 'gemini_education'))
-        paths.append(root / 'scripts/tests/test_course_choices.py')
+        paths.extend(root / ('scripts/tests/' + name) for name in ('test_course_choices.py', 'test_layout.py'))
         paths.extend(root / ('docs/' + name + '.md') for name in GUIDES)
         paths.extend((root / 'docs/skills').rglob('SKILL.md'))
         paths.extend(root / name for name in ('docs/templates/asterium.html', 'docs/templates/education.html',
@@ -210,7 +211,7 @@ def export(destination, root=ROOT, catalog=None):
         (evidence / 'isbn-findings.json').write_bytes(encoded(findings))
         (stage / 'data/NOTICE.md').write_text(PUBLIC_NOTICE, encoding='utf-8')
         (stage / 'README.md').write_text(PUBLIC_README, encoding='utf-8')
-        (stage / 'AGENTS.md').write_text(PUBLIC_AGENTS, encoding='utf-8')
+        (stage / 'docs/AGENTS.md').write_text(PUBLIC_AGENTS, encoding='utf-8')
         for path in (stage / 'docs').rglob('*.md'):
             text = path.read_text(encoding='utf-8')
             def link(match):
@@ -240,6 +241,8 @@ No textbooks or personal learning materials are distributed. Keep acquired mater
 '''
 
 PUBLIC_README = '''# Topclass
+
+**AI agents:** Read [the agent instructions](docs/AGENTS.md) before setup or changes.
 
 Give your AI agent useful books for the work you need.
 
@@ -283,13 +286,13 @@ cd topclass
 On macOS or Linux:
 
 ```sh
-./topclass setup --host codex
+./scripts/topclass setup --host codex
 ```
 
 On Windows PowerShell:
 
 ```powershell
-.\\topclass.cmd setup --host codex
+.\\scripts\\topclass.cmd setup --host codex
 ```
 
 For Claude, change `codex` to `claude`. Open this project in your AI app and reload its skills.
@@ -316,7 +319,7 @@ Clean installation checks passed for Codex and Claude on all three operating sys
 
 ## License
 
-Topclass code uses the [MIT license](LICENSE). The included book finder keeps its [license](scripts/finder/LICENSE) and [source record](scripts/finder/origin.json).
+Topclass code uses the [MIT license](docs/LICENSE). The included book finder keeps its [license](scripts/finder/LICENSE) and [source record](scripts/finder/origin.json).
 
 Source links credit the universities and book providers. No university endorses Topclass. Read the [source notice](data/NOTICE.md).
 '''

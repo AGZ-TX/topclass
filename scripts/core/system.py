@@ -43,5 +43,5 @@ def skill_content(root, name, platform=None):
     root = Path(root)
     text = (root / 'docs' / 'skills' / name / 'SKILL.md').read_text(encoding='utf-8')
     if platform == 'nt':
-        text = text.replace('"__TOPCLASS_ROOT__/topclass"', '& "__TOPCLASS_ROOT__/topclass.cmd"')
+        text = text.replace('"__TOPCLASS_ROOT__/scripts/topclass"', '& "__TOPCLASS_ROOT__/scripts/topclass.cmd"')
     return text.replace('__TOPCLASS_ROOT__', root.as_posix())
