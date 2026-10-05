@@ -1,3 +1,5 @@
+![Topclass catalog: 21 fields with course counts, followed by the 12 universities represented in 4,935 courses.](docs/assets/catalog-overview.png)
+
 # Topclass
 
 Give your AI agent an education.
@@ -58,8 +60,6 @@ Each agent has its own books and search memory. Google Embedding 2 processes ori
 Text and page images go to Google for embeddings. Your Google account controls quota and charges. Topclass adds no usage or spending caps. See [source memory](docs/memory.md) and [privacy](docs/privacy.md).
 
 ## Catalog and license
-
-![Topclass catalog: 21 fields with course counts, followed by the 12 universities represented in 4,935 courses.](docs/assets/catalog-overview.png)
 
 [Catalog counts and source data](docs/assets/catalog-fields.json).
 
