@@ -189,6 +189,7 @@ def export(destination, root=ROOT, catalog=None):
         paths.extend(root / ('scripts/' + name + '.py') for name in ('topclass', 'source_pipeline', 'source_index',
             'source_retrieval', 'source_education', 'provider_runtime', 'book_search', 'education_graph', 'education_planner', 'gemini_education'))
         paths.extend(root / ('scripts/tests/' + name) for name in ('test_course_choices.py', 'test_layout.py'))
+        paths.extend(root / ('docs/assets/' + name) for name in ('catalog-overview.png', 'catalog-fields.json', 'catalog-image-prompt.txt'))
         paths.extend(root / ('docs/' + name + '.md') for name in GUIDES)
         paths.extend((root / 'docs/skills').rglob('SKILL.md'))
         paths.extend(root / name for name in ('docs/templates/asterium.html', 'docs/templates/education.html',
@@ -297,9 +298,13 @@ Use `--skip-google` if you want to choose courses before adding a key. You need 
 
 Each agent has its own books and search memory. Google Embedding 2 processes original text and page images so the agent can find passages by meaning. A page index points back to the source pages. A similarity graph connects related passages for further reading. Those links do not establish facts or train the agent's model.
 
-Your files stay in local private storage, outside the public repository. Text and page images go to Google for embeddings. Your Google account controls quota and charges. Topclass adds no usage or spending caps. See [source memory](docs/memory.md) and [privacy](docs/privacy.md).
+Text and page images go to Google for embeddings. Your Google account controls quota and charges. Topclass adds no usage or spending caps. See [source memory](docs/memory.md) and [privacy](docs/privacy.md).
 
 ## Catalog and license
+
+![Topclass catalog: 4,935 courses from 12 universities, grouped by 21 overlapping field tags.](docs/assets/catalog-overview.png)
+
+[Catalog counts and source data](docs/assets/catalog-fields.json).
 
 The catalog contains course names, book details, dates, and source links. It includes no textbooks or saved university descriptions. Your agent uses the records to suggest courses and can check linked sources for more detail. A book title alone does not prove what it teaches.
 
