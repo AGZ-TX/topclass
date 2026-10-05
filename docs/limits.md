@@ -4,7 +4,7 @@ Topclass’s Google workflow has no daily request, token, spending or invented r
 
 ## Backup keys
 
-Add a private backup with `./topclass google --fallback`, using a hidden prompt or private `--key-file`. A provider HTTP 429 immediately tries the next configured key rather than waiting on the first key. Each key has its own credential-bound request cache and provider cooldown. Keys from different Google projects can have separate quota; keys in the same project share quota. Topclass cannot infer a trustworthy project identity from the key string.
+Add a private backup with `./scripts/topclass google --fallback`, using a hidden prompt or private `--key-file`. A provider HTTP 429 immediately tries the next configured key rather than waiting on the first key. Each key has its own credential-bound request cache and provider cooldown. Keys from different Google projects can have separate quota; keys in the same project share quota. Topclass cannot infer a trustworthy project identity from the key string.
 
 Completed caches across all keys are checked before a live call, including after the primary recovers. If every key is limited, work stays deferred until the earliest provider retry is due. Google’s Retry-After and RetryInfo delays are respected. When no delay is supplied, transient backoff prevents a rapid retry loop; Topclass does not invent a daily allowance or daily blocking window. Google quota retries do not expire merely because a local request counter or retry window was reached.
 

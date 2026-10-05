@@ -1,21 +1,21 @@
 # Books after confirmation
 
-The AI chooses courses and authors the education HTML. When the user confirms those choices and returns the choices file, `./topclass select` validates the saved snapshot, creates the book list, and automatically passes supported ISBNs to the included finder. Returned checked files automatically enter private indexing; `/add` is only for extra material.
+The AI chooses courses and authors the education HTML. When the user confirms those choices and returns the choices file, `./scripts/topclass select` validates the saved snapshot, creates the book list, and automatically passes supported ISBNs to the included finder. Returned checked files automatically enter private indexing; `/add` is only for extra material.
 
 That repo’s `search.py` finds records, retrieves supported files, checks catalog MD5, supported format and SHA-256 stability before releasing files. Results use `file_verified` with explicit `checks` and `checked_at` fields; antivirus scanning is not part of this pipeline. Topclass reads its report, checks requested ISBN membership, validates that returned files are inside this selection’s private checked directory, and rechecks MD5, SHA-256 and byte counts. The search handoff itself does not derive knowledge; the following source-index worker opens supported originals for embeddings and page navigation. A checked file is not proof of publisher authenticity, a particular course-assigned edition, or learned knowledge.
 
 ## Connect once
 
-Run `./topclass setup` to prepare the bundled finder with Node.js 20+, Python 3.11+, its local MCP server, and Chromium. No private repository access is needed. A desktop session may be needed for verification. See [setup](setup.md). Do not substitute the upstream npm package.
+Run `./scripts/topclass setup` to prepare the bundled finder with Node.js 20+, Python 3.11+, its local MCP server, and Chromium. No private repository access is needed. A desktop session may be needed for verification. See [setup](setup.md). Do not substitute the upstream npm package.
 
 ```sh
-./topclass setup --host codex
+./scripts/topclass setup --host codex
 ```
 
 An existing prepared AGZ-TX/search checkout is an optional override:
 
 ```sh
-./topclass finder --repo /absolute/path/to/search
+./scripts/topclass finder --repo /absolute/path/to/search
 ```
 
 The connection is private workspace configuration; it contains only the executable checkout path, not credentials or learned material. `TOPCLASS_SEARCH_REPO` or a prepared sibling `search` checkout also work. Explicit `--search-repo` on `select` or `books` takes precedence, then the environment, saved configuration and sibling fallback. Preparing a connection does not search or download anything.
@@ -25,8 +25,8 @@ The host handles command details. Users review courses and confirm them; they do
 ## Confirm, search and retry
 
 ```sh
-./topclass select --agent AGENT_ID /path/to/confirmed-choices.json
-./topclass books --agent AGENT_ID
+./scripts/topclass select --agent AGENT_ID /path/to/confirmed-choices.json
+./scripts/topclass books --agent AGENT_ID
 ```
 
 Search is allowed only after validated selection. Hire, planning, browsing and HTML validation never start acquisition. Removed and unselected courses are absent from the ISBN request. Queries are normalized to ISBN-13 and deduplicated without combining course/book assignments. More than 100 ISBNs are split into batches of at most 100, using search’s default record limit. Original ISBNs, citations and course assignment evidence are unchanged.

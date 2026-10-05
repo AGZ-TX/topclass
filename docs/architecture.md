@@ -1,6 +1,6 @@
 # Architecture
 
-`topclass` is the public executable. It locates its checkout, uses the local Python environment, and routes setup, auditing, and agent commands. Installed skills invoke that absolute executable; the host does not need to guess a working directory.
+`scripts/topclass` is the public executable. It locates its checkout, uses the local Python environment, and routes setup, auditing, and agent commands. Installed skills invoke that absolute executable; the host does not need to guess a working directory.
 
 | Module in `scripts/core/` | Responsibility |
 |---|---|

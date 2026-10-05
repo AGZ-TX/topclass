@@ -61,12 +61,12 @@ def main(argv=None):
     python = venv_python(ROOT)
     if not python.is_file():
         venv.EnvBuilder(with_pip=True).create(environment)
-    run([str(python), '-m', 'pip', 'install', '-r', str(ROOT / 'requirements.txt')])
+    run([str(python), '-m', 'pip', 'install', '-r', str(ROOT / 'scripts' / 'requirements.txt')])
     run([npm, 'ci', '--ignore-scripts'], finder)
     run([npm, 'run', 'build'], finder)
     if not args.skip_browser:
         run([node, 'node_modules/playwright/cli.js', 'install', 'chromium'], finder)
-    configured = subprocess.run([str(python), str(ROOT / 'topclass'), '--home', str(args.home),
+    configured = subprocess.run([str(python), str(ROOT / 'scripts' / 'topclass'), '--home', str(args.home),
                                 'finder', '--repo', str(finder)], check=True, capture_output=True, text=True)
     result = {'finder': json.loads(configured.stdout), 'skills': skills(args.host, args.destination),
               'google': 'not-configured', 'next': 'Use /hire and describe your agent’s purpose.'}
@@ -77,7 +77,7 @@ def main(argv=None):
             from core.pipeline import configure_google
             result['google'] = configure_google(args.home, args.key_file)
         else:
-            result['next'] = 'Run ./topclass google once, then use /hire.'
+            result['next'] = 'Run ./scripts/topclass google once, then use /hire.'
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
 

@@ -4,7 +4,7 @@ import os
 import sys
 
 
-root = Path(__file__).resolve().parent
+root = Path(__file__).resolve().parents[1]
 if sys.version_info < (3, 11):
     raise SystemExit('Topclass needs Python 3.11+ on Windows, macOS, or Linux.')
 os.environ['PYTHONUTF8'] = '1'
