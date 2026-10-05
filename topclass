@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+from pathlib import Path
+import os
+import sys
+
+
+root = Path(__file__).resolve().parent
+if sys.version_info < (3, 11):
+    raise SystemExit('Topclass needs Python 3.11+ on Windows, macOS, or Linux.')
+os.environ['PYTHONUTF8'] = '1'
+if os.name == 'nt' and not sys.flags.utf8_mode:
+    os.execv(sys.executable, [sys.executable, '-X', 'utf8', str(Path(__file__).resolve()), *sys.argv[1:]])
+python = root / '.venv' / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
+if python.is_file() and Path(sys.prefix).absolute() != python.parent.parent:
+    os.execv(str(python), [str(python), '-X', 'utf8', str(Path(__file__).resolve()), *sys.argv[1:]])
+sys.path.insert(0, str(root / 'scripts'))
+try:
+    if len(sys.argv) > 1 and sys.argv[1] == 'setup':
+        from setup import main
+        result = main(sys.argv[2:])
+    elif len(sys.argv) > 1 and sys.argv[1] == 'audit':
+        from privacy import main
+        result = main(sys.argv[2:])
+    else:
+        from core.app import main
+        result = main()
+    raise SystemExit(result if isinstance(result, int) else 0)
+except (ValueError, OSError, KeyError) as error:
+    print('Error: ' + str(error), file=sys.stderr)
+    raise SystemExit(1)

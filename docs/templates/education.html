@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Topclass · Your education plan</title>
+<style>
+:root{font-family:system-ui,-apple-system,sans-serif;color:#243c35;background:#f7f8f5;font-synthesis:none;--ease-out:cubic-bezier(.23,1,.32,1)}
+*{box-sizing:border-box}body{max-width:1120px;margin:auto;padding:40px 32px 80px}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(30px,4vw,44px);letter-spacing:-.04em;line-height:1.12;max-width:760px;margin:22px 0 16px}h2{font-size:24px;letter-spacing:-.025em;margin-bottom:8px}h3{font-size:18px;letter-spacing:-.015em;line-height:1.4;margin-bottom:8px}p{line-height:1.6}button,select,input{font:inherit;border:1px solid #c2cfc7;border-radius:8px;background:#fff;color:inherit;min-height:44px;padding:10px 14px}button{cursor:pointer;font-size:14px;font-weight:600}button.primary{background:#254d3d;color:#fff;border-color:#254d3d}button:disabled{cursor:default;color:#789085}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid #aa7320;outline-offset:3px}header{border-bottom:1px solid #dce3dc;padding-bottom:30px;margin-bottom:36px}.eyebrow{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#5e786b}.lead{max-width:730px;font-size:18px;color:#50695d}.muted{font-size:14px;color:#597064}.small{font-size:13px}.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.summary{display:flex;flex-wrap:wrap;gap:24px;margin:24px 0;color:#526b5c;font-size:14px;font-variant-numeric:tabular-nums}.summary strong{font-size:24px;color:#243c35;display:block;font-weight:650;line-height:1.4}.section-heading{display:flex;align-items:baseline;justify-content:space-between;gap:16px}.card{background:#fff;border:1px solid #dce3dc;border-radius:12px;padding:22px;margin:14px 0}.card .controls{margin-top:18px;padding-top:16px;border-top:1px solid #e8ece7}.badge{display:inline-block;background:#edf2ea;color:#49614e;padding:4px 8px;border-radius:5px;font-size:12px;font-weight:650;margin-bottom:12px}.badge.required{background:#e4eee6;color:#234f37}.sources{display:flex;gap:12px;flex-wrap:wrap}blockquote{font-size:14px;line-height:1.6;border-left:2px solid #9cb7a4;padding-left:14px;margin:16px 0;color:#506859}.notice{padding:14px 16px;background:#fcf3df;border:1px solid #ecdfbe;border-radius:8px;font-size:14px}.notice p:last-child{margin-bottom:0}section{margin:36px 0}.section-note{max-width:760px;color:#5c7164;font-size:14px}#search{width:min(100%,620px)}#description{max-width:780px;font-size:15px;color:#5b7164;white-space:pre-wrap}summary{cursor:pointer;font-size:14px;color:#365d46;padding:8px 0}details{margin-top:12px}a{color:#286344;text-underline-offset:3px;overflow-wrap:anywhere}.jump-links{display:flex;gap:18px;font-size:14px;margin-top:22px}.file-control{position:relative;display:inline-flex;align-items:center;border:1px solid #c2cfc7;border-radius:8px;background:#fff;min-height:44px;padding:10px 14px;font-size:14px;font-weight:600;cursor:pointer}.file-control input{position:absolute;inset:0;width:100%;opacity:0;cursor:pointer}.file-control:focus-within{outline:3px solid #aa7320;outline-offset:3px}#import-status{margin:12px 0 0}#undo{display:none}.book-identity{font-size:14px;color:#546b5b}.footer-note{margin-top:40px;border-top:1px solid #dce3dc;padding-top:20px}.skip-link{position:absolute;left:-10000px}.skip-link:focus{position:static}#save-status{margin-top:14px;min-height:22px}#available-count{margin:12px 0}.program-role{font-size:13px;color:#657a6d}
+@media(hover:hover) and (pointer:fine){button:hover:not(:disabled){border-color:#709980}button.pointer-press{transform:scale(.97);transition:transform 120ms var(--ease-out)}button.pointer-release{transition:transform 100ms var(--ease-out)}}
+@media(prefers-reduced-motion:reduce){button.pointer-press{transform:none;transition:none}button.pointer-release{transition:none}}
+@media(max-width:620px){body{padding:24px 16px 50px}.card{padding:18px}.section-heading{display:block}.controls{align-items:stretch}.controls button,.file-control{flex-grow:1;justify-content:center}.summary{gap:18px}.jump-links{gap:14px;flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#chosen-heading">Skip to courses</a>
+<header>
+<div class="eyebrow">Topclass / Education plan</div>
+<p id="hire-stage" class="muted small" hidden>1. Describe your agent’s purpose → 2. Choose courses → 3. Review the book list</p>
+<h1 id="plan-title">A strong foundation for your agent’s work.</h1>
+<p class="lead">Choose the courses that matter. We’ll keep their original reading evidence and build the book list from your choices.</p>
+<p id="description"></p>
+<p id="agent-scope" class="muted small" hidden></p>
+<details id="brief-details" hidden><summary>Education needs and assumptions</summary><div id="brief-skills"></div><div id="brief-assumptions"></div><p class="muted small">If this does not reflect your agent’s purpose, tell your agent what to change before choosing courses.</p></details>
+<div class="summary" aria-label="Plan totals"><div><strong id="must-count">0</strong>Must-have courses</div><div><strong id="optional-count">0</strong>Optional courses</div><div><strong id="book-count">0</strong>Book candidates</div><div><strong id="gap-count">0</strong>Open capabilities</div></div>
+<div class="controls"><button id="export" class="primary">Save course choices</button><label class="file-control">Open saved choices<input id="import" type="file" accept="application/json,.json" aria-label="Open saved course choices"></label><button id="reset">Reset recommendations</button><button id="undo">Undo removal</button></div>
+<p id="save-status" class="muted small" role="status">Choices stay in this page until you save them.</p>
+<p id="import-status" class="small" role="alert"></p>
+<nav class="jump-links" aria-label="Plan sections"><a href="#chosen-heading">Your courses</a><a href="#add-heading">Find alternatives</a><a href="#books-heading">Review books</a></nav>
+</header>
+<main>
+<section aria-labelledby="chosen-heading"><div class="section-heading"><h2 id="chosen-heading" tabindex="-1">Your courses</h2><span class="muted">Keep, remove, or change priority</span></div><p class="section-note">These are choices for your work. University program requirements and reading roles stay separate.</p><div id="selected"></div></section>
+<section aria-labelledby="gaps-heading"><h2 id="gaps-heading">What still needs coverage</h2><p class="section-note">Removing a course can leave a gap. A source-supported match is a candidate for learning; it does not prove mastery.</p><div id="gaps" aria-live="polite"></div></section>
+<section aria-labelledby="add-heading"><h2 id="add-heading">Find a useful alternative</h2><p class="section-note">Search the courses and electives prepared for this plan. Each has documented books. Courses awaiting reading evidence stay in the enrichment backlog.</p><label for="search" class="muted">Course, university, or reason</label><p><input id="search" type="search" placeholder="Search book-backed alternatives"></p><p id="available-count" class="muted" role="status"></p><div id="available"></div><button id="more" hidden>Show more alternatives</button></section>
+<section aria-labelledby="books-heading"><div class="section-heading"><h2 id="books-heading" tabindex="-1">Books for your selection</h2><button id="export-books">Save book list</button></div><p class="section-note">Useful book titles are enough to review this list. Extra details appear when available. Optional readings stay optional. No books have been learned.</p><div id="books"></div></section>
+<p id="handoff" class="footer-note muted">Review the courses and book list for your agent’s purpose. Save your choices to keep or revise them.</p>
+</main>
+<script>
+'use strict';
+const DATA=__PLANNER_DATA__;
+let selected=new Map(DATA.manifest.courses.map(item=>[item.course_id,item.priority]));
+let removed=null;
+let visibleAlternatives=12;
+const byId=id=>document.getElementById(id);
+function node(tag,text,parent,className){
+  const result=document.createElement(tag);
+  if(text!==undefined)result.textContent=text;
+  if(className)result.className=className;
+  if(parent)parent.appendChild(result);
+  return result;
+}
+function source(url,parent,label='Source evidence'){
+  try{
+    const parsed=new URL(url);
+    if(!['http:','https:'].includes(parsed.protocol))return;
+    const link=node('a',label,parent);
+    link.href=parsed.href;
+    link.target='_blank';
+    link.rel='noopener noreferrer';
+  }catch(error){}
+}
+function sourceLinks(item,parent){
+  const payload=item.course.payload||{};
+  const urls=new Set([payload.source_url,...(payload.source_urls||[])]);
+  for(const status of item.materials_evidence||[]){
+    for(const record of status.sources||[])urls.add(record.source_url);
+    for(const material of status.materials||[])urls.add(material.source_url||material.course_source_url);
+  }
+  const links=node('div',undefined,parent,'sources');
+  for(const url of urls)if(url)source(url,links);
+}
+function strengthDetails(item,parent){
+  const raw=item.subject_strength_evidence||item.school_strength_evidence||item.school_strength;
+  if(!raw)return;
+  const strengths=Array.isArray(raw)?raw:[raw];
+  const details=node('details',undefined,parent);
+  details.dataset.detailKey=item.course.id+'-strength';
+  node('summary','School strength in this subject',details);
+  node('p','Subject rankings describe a university’s broader strength. They do not rank this course or prove that its book is better.',details,'muted');
+  for(const context of strengths){
+    if(typeof context==='string'){node('p',context,details);continue;}
+    if(context.requirement)node('p','Relevant to: '+context.requirement,details,'small');
+    const records=context.evidence||context.records||[context];
+    if(!records.length)node('p','School strength unknown: '+(context.reason||'No verified subject evidence'),details,'muted');
+    for(const entry of records){
+      const provider=entry.provider||entry.ranking_provider||entry.source_name||'Ranking source';
+      const subject=entry.provider_subject||entry.subject||entry.subject_name||'Subject not stated';
+      const band=entry.rank_band;
+      const rank=entry.rank_display||entry.rank||(band&&typeof band==='object'?(band.low===band.high?band.low:band.low+'–'+band.high)+(band.tied?' (tie)':''):band);
+      const year=entry.edition_year||entry.year||entry.ranking_year;
+      node('p',[provider,subject,rank?'Rank '+rank:'Rank not established',year?'Edition '+year:'Edition not stated'].join(' · '),details);
+      if(entry.attribution)node('p',entry.attribution,details,'muted small');
+      if(entry.reason||entry.note)node('p',entry.reason||entry.note,details,'muted');
+      source(entry.source_url||entry.url,details,'Ranking evidence');
+      source(entry.ranking_url,details,'Subject ranking');
+      source(entry.methodology_url,details,'Methodology');
+    }
+  }
+}
+function courseCard(id,item,parent,chosen){
+  const card=node('article',undefined,parent,'card');
+  const payload=item.course.payload||{};
+  card.dataset.courseId=id;
+  const priority=selected.get(id);
+  node('span',chosen?(priority==='must-have'?'Must-have':'Optional / supplemental'):'Book-backed alternative',card,'badge'+(priority==='must-have'?' required':''));
+  node('h3',[payload.institution||payload.school,payload.code,item.course.label].filter(Boolean).join(' — '),card);
+  const reasons=item.selection_rationale||[];
+  for(const reason of reasons)node('p',(reason.requirement?reason.requirement+': ':'')+reason.rationale,card,'small');
+  if(!DATA.recommendation_courses.some(item=>item.course_id===id))node('p','Alternative choice: review task fit before treating a skill as covered.',card,'muted');
+  const evidence=node('details',undefined,card);
+  evidence.dataset.detailKey=id+'-evidence';
+  node('summary','Why this course · original source evidence',evidence);
+  for(const reason of reasons)for(const quote of reason.evidence||[]){
+    node('blockquote',quote.text,evidence);
+    for(const lineage of quote.source_lineage||[]){
+      const specific=lineage.scope==='matching-description-variant';
+      node('p',(specific?'Matching catalog passage':'Course group links; not passage-specific')+(lineage.source_year?' · '+lineage.source_year:''),evidence,'muted small');
+      for(const url of [lineage.source_url,...(lineage.source_urls||[])])source(url,evidence,specific?'Quoted course description':'Course group source');
+    }
+  }
+  node('p','Prerequisites: '+(item.prerequisites||'Not mapped'),evidence,'muted');
+  const roles=item.program_core_or_elective;
+  const roleText=typeof roles==='string'?roles:Array.isArray(roles)?roles.map(role=>typeof role==='string'?role:role.role||role.program_role||role.program||'Documented program role').join('; '):'Not mapped';
+  node('p','University program role: '+roleText,evidence,'program-role');
+  sourceLinks(item,evidence);
+  strengthDetails(item,card);
+  const controls=node('div',undefined,card,'controls');
+  if(chosen){
+    const label=node('label','Priority ',controls,'small');
+    const select=node('select',undefined,label);
+    select.id='priority-'+id;
+    select.setAttribute('aria-label','Priority for '+item.course.label);
+    for(const [value,text] of [['must-have','Must-have'],['supplemental','Optional / supplemental']]){
+      const option=node('option',text,select);
+      option.value=value;
+    }
+    select.value=priority;
+    select.addEventListener('change',()=>{selected.set(id,select.value);render(select.id);});
+    const button=node('button','Remove',controls);
+    button.setAttribute('aria-label','Remove '+item.course.label);
+    button.addEventListener('click',()=>{
+      const ids=[...selected.keys()];
+      const next=ids[ids.indexOf(id)+1]||ids[ids.indexOf(id)-1];
+      removed=[id,selected.get(id)];
+      selected.delete(id);
+      render(next?'priority-'+next:'search');
+    });
+  }else{
+    const button=node('button','Add as optional',controls);
+    button.addEventListener('click',()=>{selected.set(id,'supplemental');render('priority-'+id);});
+  }
+}
+function bookList(){
+  const books=[];
+  const verified=new Map();
+  const priorityOrder={'supplemental':0,'review-needed':1,'must-have':2};
+  for(const [id,priority] of selected){
+    for(const raw of DATA.materials[id][priority]){
+      const material=JSON.parse(JSON.stringify(raw));
+      const identity=material.identity_candidate;
+      const key=JSON.stringify([identity.key,identity.title.toLowerCase(),identity.authors.toLowerCase(),identity.edition.toLowerCase()]);
+      if(!material.verify_before_deduplicating&&verified.has(key)){
+        const existing=verified.get(key);
+        existing.assignments.push(...material.assignments);
+        if(priorityOrder[material.topclass_priority]>priorityOrder[existing.topclass_priority])existing.topclass_priority=material.topclass_priority;
+      }else{
+        books.push(material);
+        if(!material.verify_before_deduplicating)verified.set(key,material);
+      }
+    }
+  }
+  return books;
+}
+function bookDetails(identity){
+  return [['authors','Author'],['edition','Edition'],['isbn','ISBN']].filter(([key])=>identity[key]).map(([key,label])=>label+': '+identity[key]);
+}
+function renderBooks(books){
+  byId('books').replaceChildren();
+  byId('export-books').disabled=!books.length;
+  if(!books.length)node('p','Select a course to build the book list.',byId('books'),'notice');
+  for(const material of books){
+    const card=node('article',undefined,byId('books'),'card');
+    const identity=material.display_identity||material.identity_candidate;
+    node('span',material.topclass_priority==='must-have'?'Must-have reading':material.topclass_priority==='supplemental'?'Optional reading':'Reading role needs review',card,'badge');
+    node('h3',identity.title,card);
+    const extras=bookDetails(identity);
+    if(extras.length)node('p',extras.join(' · '),card,'book-identity');
+    const links=node('div',undefined,card,'sources book-sources');
+    const urls=new Set(material.assignments.flatMap(assignment=>[assignment.evidence.source_url||assignment.evidence.course_source_url,...(assignment.sources||[]).map(record=>record.source_url)]));
+    for(const url of urls)if(url)source(url,links,'Book source');
+    for(const finding of identity.finding_aids||[]){
+      const row=node('p',undefined,card,'book-finding');
+      if(finding.title!==identity.title)node('span',finding.title+' · ',row);
+      if(!identity.authors&&finding.authors)node('span',finding.authors+' · ',row);
+      node('span',(finding.isbn?'ISBN: '+finding.isbn+' · ':'')+(finding.edition?finding.edition+' · ':'')+finding.edition_status+' · ',row);
+      source(finding.source_url,row,'Find this book');
+    }
+    const details=node('details',undefined,card);
+    details.dataset.detailKey='book-'+books.indexOf(material);
+    node('summary','Course assignments and original citations',details);
+    node('p',material.identity_status,details,'muted small');
+    for(const assignment of material.assignments){
+      const evidence=assignment.evidence;
+      node('p',assignment.course_id+' — Reading role: '+(evidence.assignment_role||evidence.assigned_vs_suggested_wording||'Not stated'),details,'small');
+      node('blockquote',evidence.exact_source_title_or_citation||evidence.source_title_or_citation||evidence.citation||evidence.title||identity.title,details);
+      source(evidence.source_url||evidence.course_source_url,details);
+      for(const record of assignment.sources||[])source(record.source_url,details);
+    }
+  }
+}
+function render(focusId){
+  const opened=new Set([...document.querySelectorAll('details[open]')].map(item=>item.dataset.detailKey));
+  byId('selected').replaceChildren();
+  if(!selected.size)node('p','No courses selected. Add a course below.',byId('selected'),'notice');
+  for(const priority of ['must-have','supplemental']){
+    const courses=[...selected].filter(([,value])=>value===priority);
+    if(courses.length)node('h3',priority==='must-have'?'Must-have courses':'Optional courses and electives',byId('selected'));
+    for(const [id] of courses)courseCard(id,DATA.pool[id],byId('selected'),true);
+  }
+  renderAvailable();
+  byId('gaps').replaceChildren();
+  let gaps=0;
+  for(const requirement of DATA.plan.requirement_coverage||[]){
+    const matches=[...selected.keys()].flatMap(id=>DATA.pool[id].matches||[]).filter(match=>match.kind===requirement.kind&&match.requirement===requirement.requirement);
+    if(!matches.some(match=>match.coverage_fraction===1&&match.review_decision!=='supplemental'&&match.support_level!=='supporting'&&!match.context_review_needed&&!match.work_review_needed)){
+      gaps++;
+      const supporting=matches.some(match=>match.review_decision==='supplemental'||match.support_level==='supporting');
+      const contextPending=matches.some(match=>match.context_review_needed||match.work_review_needed);
+      node('p',requirement.requirement+': '+(contextPending?'Source vocabulary matches, but fit to the intended work needs local review.':supporting?'Only supporting or partial candidate matches; direct candidate fit still needs review.':matches.length?'Only partial source-supported candidate matches.':'No selected source-supported candidate match.'),byId('gaps'),'notice');
+    }
+  }
+  if(!gaps)node('p','Every listed capability has a candidate match. Learning outcomes remain unverified.',byId('gaps'),'muted');
+  for(const gap of DATA.plan.gaps||[])if(gap.constraint)node('p',gap.constraint+': '+gap.gap,byId('gaps'),'notice');
+  const books=bookList();
+  renderBooks(books);
+  byId('must-count').textContent=[...selected.values()].filter(value=>value==='must-have').length;
+  byId('optional-count').textContent=[...selected.values()].filter(value=>value==='supplemental').length;
+  byId('book-count').textContent=books.length;
+  byId('gap-count').textContent=gaps;
+  byId('undo').style.display=removed?'inline-block':'none';
+  byId('save-status').textContent=selected.size+(DATA.plan.agent?' courses selected. Confirm when you are ready for your agent to find the books.':' courses selected. Save your choices to create the final book report.');
+  for(const item of document.querySelectorAll('details'))if(opened.has(item.dataset.detailKey))item.open=true;
+  if(focusId&&byId(focusId))byId(focusId).focus({preventScroll:true});
+}
+function renderAvailable(){
+  const query=byId('search').value.toLowerCase().trim();
+  byId('available').replaceChildren();
+  const matches=Object.entries(DATA.pool).filter(([id,item])=>!selected.has(id)&&(!query||JSON.stringify(item).toLowerCase().includes(query)));
+  for(const [id,item] of matches.slice(0,visibleAlternatives))courseCard(id,item,byId('available'),false);
+  byId('available-count').textContent=matches.length?Math.min(matches.length,visibleAlternatives)+' of '+matches.length+' alternatives':'No more matching alternatives in this plan.';
+  byId('more').hidden=matches.length<=visibleAlternatives;
+}
+function manifest(){return {...DATA.manifest,courses:[...selected].map(([course_id,priority])=>({course_id,priority}))};}
+function download(value,filename,type='application/json'){
+  const content=type==='application/json'?JSON.stringify(value,null,2)+'\n':value;
+  const url=URL.createObjectURL(new Blob([content],{type}));
+  const link=node('a');
+  link.href=url;
+  link.download=filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function importSelection(value){
+  const keys=Object.keys(DATA.manifest).sort().join(',');
+  if(!value||typeof value!=='object'||Object.keys(value).sort().join(',')!==keys)throw new Error('Use the course choices file exported by this plan.');
+  for(const key of ['format','plan_fingerprint','snapshot_fingerprint'])if(value[key]!==DATA.manifest[key])throw new Error('These choices belong to a different plan or evidence snapshot.');
+  if(!Array.isArray(value.courses))throw new Error('Course choices must be a list.');
+  const next=new Map();
+  for(const item of value.courses){
+    if(!item||Object.keys(item).sort().join(',')!=='course_id,priority'||typeof item.course_id!=='string'||!Object.prototype.hasOwnProperty.call(DATA.pool,item.course_id)||next.has(item.course_id)||!['must-have','supplemental'].includes(item.priority))throw new Error('The file has unknown, duplicate, or edited course evidence.');
+    next.set(item.course_id,item.priority);
+  }
+  selected=next;
+  removed=null;
+  render();
+}
+function bookReport(){
+  const lines=['Topclass — books for your selected courses','Useful book titles are enough for this list. Extra details are included when available. No books have been learned.',''];
+  for(const material of bookList()){
+    const identity=material.display_identity||material.identity_candidate;
+    lines.push(identity.title,'Priority: '+material.topclass_priority,...bookDetails(identity),material.identity_status);
+    for(const finding of identity.finding_aids||[])lines.push((finding.isbn?'ISBN: '+finding.isbn+' · ':'')+(finding.edition?finding.edition+' · ':'')+finding.edition_status,'Book source: '+finding.source_url);
+    for(const assignment of material.assignments){
+      const evidence=assignment.evidence;
+      lines.push('Course: '+assignment.course_id,'Reading role: '+(evidence.assignment_role||evidence.assigned_vs_suggested_wording||'Not stated'),'Original citation: '+(evidence.exact_source_title_or_citation||evidence.source_title_or_citation||evidence.citation||evidence.title||identity.title));
+      for(const url of [evidence.source_url||evidence.course_source_url,...(assignment.sources||[]).map(record=>record.source_url)])if(typeof url==='string'&&/^https?:\/\//i.test(url))lines.push('Source: '+url);
+    }
+    lines.push('');
+  }
+  return lines.join('\n');
+}
+byId('description').textContent=DATA.plan.brief.original_description||DATA.plan.brief.role||'Your expert education plan';
+if(DATA.plan.agent){
+  byId('plan-title').textContent='Choose courses for '+DATA.plan.agent.name;
+  byId('hire-stage').hidden=false;
+  byId('agent-scope').hidden=false;
+  byId('agent-scope').textContent='This plan belongs to '+DATA.plan.agent.name+'. Its learning materials and memory stay separate from your other agents.';
+  byId('export').textContent='Confirm courses and find books';
+  byId('handoff').textContent='Confirm your courses, then send the downloaded file back to your agent. Your agent will search their ISBNs, retrieve matching books and return checked files or remaining source links. Books are not needed to edit this plan.';
+}
+if((DATA.plan.brief.capabilities||[]).length||(DATA.plan.brief.assumptions||[]).length){
+  byId('brief-details').hidden=false;
+  for(const skill of DATA.plan.brief.capabilities||[])node('p',skill.description+' · '+(skill.priority==='essential'?'Must-have skill':'Optional skill'),byId('brief-skills'),'small');
+  for(const assumption of DATA.plan.brief.assumptions||[])node('p','Assumption: '+assumption,byId('brief-assumptions'),'muted small');
+}
+byId('search').addEventListener('input',()=>{visibleAlternatives=12;renderAvailable();});
+byId('more').addEventListener('click',()=>{visibleAlternatives+=12;renderAvailable();if(byId('more').hidden)byId('search').focus({preventScroll:true});});
+byId('reset').addEventListener('click',()=>{selected=new Map(DATA.recommendation_courses.map(item=>[item.course_id,item.priority]));removed=null;render('reset');});
+byId('undo').addEventListener('click',()=>{if(removed){const [id,priority]=removed;selected.set(id,priority);removed=null;render('priority-'+id);}});
+byId('export').addEventListener('click',()=>{download(manifest(),DATA.plan.agent?'topclass-'+DATA.plan.agent.id+'-choices.json':'topclass-course-choices.json');byId('save-status').textContent=DATA.plan.agent?'Courses confirmed. Send this file back to your agent to start the ISBN book search.':'Choices downloaded. Open this file again to resume, or import it to create the final book report.';});
+byId('export-books').addEventListener('click',()=>download(bookReport(),'topclass-book-list.txt','text/plain'));
+byId('import').addEventListener('change',async event=>{
+  const file=event.target.files[0];
+  if(!file)return;
+  try{
+    if(file.size>2000000)throw new Error('This choices file is too large. Use the small file exported by this plan.');
+    importSelection(JSON.parse(await file.text()));
+    byId('import-status').textContent='Your saved course choices are open.';
+  }catch(error){byId('import-status').textContent=error.message||'Could not open the choices file.';}
+  event.target.value='';
+});
+document.addEventListener('pointerdown',event=>{
+  const button=event.target.closest('button');
+  if(button&&!button.disabled){button.classList.remove('pointer-release');button.classList.add('pointer-press');}
+});
+for(const event of ['pointerup','pointercancel'])document.addEventListener(event,()=>{
+  for(const button of document.querySelectorAll('.pointer-press')){button.classList.remove('pointer-press');button.classList.add('pointer-release');}
+});
+render();
+</script>
+</body>
+</html>

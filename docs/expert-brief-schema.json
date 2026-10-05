@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "role": {"type": "string"},
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "description": {"type": "string"},
+          "priority": {"type": "string", "enum": ["essential", "supplemental"]},
+          "search_terms": {"type": "array", "items": {"type": "string"}}
+        },
+        "required": ["id", "description", "priority", "search_terms"],
+        "additionalProperties": false
+      }
+    },
+    "deliverables": {"type": "array", "items": {"type": "string"}},
+    "constraints": {"type": "array", "items": {"type": "string"}},
+    "exclude": {"type": "array", "items": {"type": "string"}},
+    "institutions": {"type": "array", "items": {"type": "string"}},
+    "existing_knowledge": {"type": "array", "items": {"type": "string"}},
+    "assumptions": {"type": "array", "items": {"type": "string"}}
+  },
+  "required": ["role", "capabilities", "deliverables", "constraints", "exclude", "institutions", "existing_knowledge", "assumptions"],
+  "additionalProperties": false
+}
