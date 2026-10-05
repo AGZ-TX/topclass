@@ -59,7 +59,7 @@ Text and page images go to Google for embeddings. Your Google account controls q
 
 ## Catalog and license
 
-![Topclass catalog: 4,935 courses from 12 universities, grouped by 21 overlapping field tags.](docs/assets/catalog-overview.png)
+![Topclass catalog: course counts for all 12 universities, with 4,935 courses and 21 field tags.](docs/assets/catalog-overview.png)
 
 [Catalog counts and source data](docs/assets/catalog-fields.json).
 

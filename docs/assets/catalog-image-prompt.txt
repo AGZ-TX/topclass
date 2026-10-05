@@ -2,33 +2,47 @@ Generation mode: built-in image_gen
 Catalog snapshot: 2026-10-05
 
 Use case: infographic-diagram.
-Create a polished editorial infographic for Topclass's GitHub README showing the actual current saved catalog. Landscape 4:3 high-resolution raster image, crisp readable typography. Established Topclass style: near-black navy background, restrained lavender accents, warm off-white text, elegant serif title and clean sans-serif data labels. Fine lavender four-point star beside Topclass wordmark. No decorative clutter, gradients that obscure text, or fake UI.
-Top header exact: "Topclass catalog"
-Prominent summary exact: "4,935 courses" / "12 universities" / "21 field tags"
-Small header: "Snapshot: 5 October 2026"
-Main content: 21 equal-sized cards in a meticulous 3-column by 7-row grid, row-major order, generous breathing room. Every card has the exact field label and exact course count below. No charts with implied proportional areas. No invented subjects, counts or percentages. Render every entry exactly once:
-Humanities, history & languages — 1,421
-Natural & physical sciences — 824
-Engineering & applied technology — 807
-Social sciences & society — 627
-Business, economics & management — 569
-Mathematics & statistics — 502
-Law, policy & governance — 432
-Computing, data & information — 355
-Arts, design & media — 354
-Environment, earth & climate — 312
-Philosophy, religion & ethics — 288
-Architecture & built environment — 267
-Health & medicine — 176
-Psychology & cognitive science — 174
-Education & learning sciences — 129
-Communication & journalism — 79
-Agriculture, animal & veterinary sciences — 53
-Public service & social work — 33
-Interdisciplinary & general studies — 28
-Sports, recreation & wellness — 5
-Military, security & public safety — 3
-Use typographic hierarchy and subtle line-art subject icons, not illustrations of people or books. All text must be legible at full size. Labels may wrap cleanly onto two lines.
-Footer exact, clearly readable: "Courses can have multiple field tags. 2 courses have no field tag."
-Second footer: "Saved course and book metadata. Coverage varies by field."
-These are catalog classifications, not claims of full disciplinary coverage or agent learning. No university logos, endorsements, fabricated claims, or additional text. Opaque background.
+Create a NEW redesigned editorial catalog infographic for Topclass's GitHub README. Black background (#000000), white and soft gray typography, extremely restrained cool gray rules. No lavender, purple, gradients, glows or decorative stars. Landscape 4:3, high resolution, premium Swiss editorial typography with a large elegant serif headline and clear sans-serif labels. Distinct from a colorful dashboard or a grid of rounded cards. Make the universities the dominant information. No university logos, seals, mascots, photos, or suggestion of endorsement.
+Exact headline: "Topclass"
+Exact subtitle: "The catalog"
+Large summary: "4,935 courses" and "12 universities"
+Small date: "5 October 2026"
+Below: a spacious, perfectly aligned typographic list of all twelve universities, in two columns of six rows with fine gray horizontal rules. Each university name paired with its exact saved course count. Use these entries ONCE EACH, in this order, reading down the left column then down the right:
+Massachusetts Institute of Technology | 1,859
+Cornell University | 1,231
+Harvard University | 552
+Princeton University | 432
+Brown University | 372
+Stanford University | 194
+Dartmouth College | 92
+Columbia University | 84
+Carnegie Mellon University | 66
+University of California, Berkeley | 21
+Yale University | 17
+University of Pennsylvania | 15
+Clearly label the number column "Courses". The counts add up to 4,935. Do not change or invent numbers.
+Bottom section separated by a fine rule, heading: "21 field tags"
+Below that, compact but legible text arranged as a clean typographic index, containing all these field names, without counts:
+"Humanities, history & languages"
+"Natural & physical sciences"
+"Engineering & applied technology"
+"Social sciences & society"
+"Business, economics & management"
+"Mathematics & statistics"
+"Law, policy & governance"
+"Computing, data & information"
+"Arts, design & media"
+"Environment, earth & climate"
+"Philosophy, religion & ethics"
+"Architecture & built environment"
+"Health & medicine"
+"Psychology & cognitive science"
+"Education & learning sciences"
+"Communication & journalism"
+"Agriculture, animal & veterinary sciences"
+"Public service & social work"
+"Interdisciplinary & general studies"
+"Sports, recreation & wellness"
+"Military, security & public safety"
+Footer exact: "Saved course and book metadata. Field tags overlap; coverage varies."
+Make the institution names large and easy to read; allow long names to wrap cleanly. Use deliberate whitespace, editorial hierarchy and sober black-and-white design. No cards, pill badges, icons or additional text. Every institution and field label must be spelled correctly.
