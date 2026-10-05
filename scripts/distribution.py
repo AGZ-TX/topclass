@@ -240,43 +240,35 @@ Topclass's MIT license covers its original code and documentation. The included 
 No textbooks or personal learning materials are distributed. Keep acquired materials, keys, browser state and agent memory private. Follow the linked sources' terms when accessing or reusing their content.
 '''
 
-PUBLIC_README = '''# Topclass
+PUBLIC_README = r'''# Topclass
 
-**AI agents:** Read [the agent instructions](docs/AGENTS.md) before setup or changes.
+Give your AI agent an education.
 
-Give your AI agent useful books for the work you need.
+Tell Codex or Claude what you need an agent to do. It suggests ten university courses and their books. Add or remove courses, then confirm your choices. Topclass finds available books and builds a private library that your agent can search.
 
-Tell the agent its purpose. It suggests university courses and books. You choose the courses on a web page. Topclass then finds available books and makes them searchable for that agent.
+This is an experimental project. Some books will be missing, and course records may list older editions.
 
-This is a fun, experimental project. It does not train a new AI model or give your agent a degree.
+## Get started
 
-## Start with your agent
+Download or clone this repository and open it in Codex or Claude. Ask your agent:
 
-Download or clone this repository. Open the folder in Codex or Claude. Ask your agent:
+> Read docs/AGENTS.md and install Topclass. Help me choose courses for an agent that develops my brand and guides its design.
 
-> Install Topclass for this project. Then help me choose courses for an agent that develops my brand and guides its design.
+Replace the example with your own task. Once setup is complete, use `$hire` in Codex or `/hire` in Claude.
 
-Replace the example with your tasks and field of work. You can also use `$hire` in Codex or `/hire` in Claude.
+Your agent asks for its purpose and prepares a course page with ten suggestions. If the catalog has fewer useful courses, it explains the gap. Add or remove courses, press **Start**, and return the saved choices to your agent. Your agent confirms the list, then Topclass searches for the books and indexes the files it can obtain.
 
-1. Answer: “What is your agent's purpose?”
-2. Review the course page. Your agent suggests 10 useful courses, or explains why it found fewer.
-3. Add or remove courses. All suggestions start selected; there are no course tiers.
-4. Press **Start**. Give the saved choices to your agent.
-5. Ask your agent to confirm the choices. Topclass finds and indexes available books for that agent.
-
-The course page uses the same layout for everyone. Your agent changes the course data, role title and role description.
-
-| Command | Use it to |
+| Command | What it does |
 | --- | --- |
-| hire | Choose courses and books for a purpose. |
-| recall | Search that agent's original text and page images. |
-| add | Add extra books, papers or notes that you supply. |
+| `hire` | Suggests courses and books for your agent's purpose. |
+| `recall` | Searches that agent's original text and page images. |
+| `add` | Adds extra books, papers, or notes that you supply. |
 
-Some books will be missing. Some editions will be uncertain. Your agent must report these gaps.
+AI agents working in this repository must read [docs/AGENTS.md](docs/AGENTS.md).
 
-## Manual installation
+## Manual setup
 
-Use **Python 3.11+** and **Node.js 20+**. Windows, macOS and Linux are supported. WSL is optional.
+You need Python 3.11+ and Node.js 20+. Topclass supports Windows, macOS, and Linux.
 
 ```sh
 git clone https://github.com/AGZ-TX/topclass.git
@@ -292,36 +284,33 @@ On macOS or Linux:
 On Windows PowerShell:
 
 ```powershell
-.\\scripts\\topclass.cmd setup --host codex
+.\scripts\topclass.cmd setup --host codex
 ```
 
-For Claude, change `codex` to `claude`. Open this project in your AI app and reload its skills.
+For Claude, replace `codex` with `claude`. Open the project in your AI app and reload its skills.
 
-Setup installs Python packages, the book finder, Chromium and three skills. It does not search for books or call a model.
+Setup installs the Python packages, book finder, Chromium, and host skills. It asks for your Google API key through a hidden prompt. Setup makes no book searches or model calls.
 
-Setup asks for a Google API key through a hidden prompt. Use `--skip-google` to choose courses before you set up a key. Indexing requires the key. Read the [setup guide](docs/setup.md) for updates and browser help.
+Use `--skip-google` if you want to choose courses before adding a key. You need the key to index books. The [setup guide](docs/setup.md) covers updates, skill refreshes, and browser issues.
 
-## Your data
+## How the library works
 
-Each agent has separate books and search memory. Keys, books, browser data and personal plans stay outside the public repository.
+Each agent has its own books and search memory. Google Embedding 2 processes original text and page images so the agent can find passages by meaning. A page index points back to the source pages. A similarity graph connects related passages for further reading. Those links do not establish facts or train the agent's model.
 
-Google receives text and page images to create embeddings. Embeddings help find related passages. They do not prove that the agent understands a book.
+Your files stay in local private storage, outside the public repository. Text and page images go to Google for embeddings. Your Google account controls quota and charges. Topclass adds no usage or spending caps. See [source memory](docs/memory.md) and [privacy](docs/privacy.md).
 
-Your Google account controls quota and charges. Topclass adds no daily request, token, rate or spending caps. Read the [privacy guide](docs/privacy.md).
+## Catalog and license
 
-## The catalog
+The catalog contains course names, book details, dates, and source links. It includes no textbooks or saved university descriptions. Your agent uses the records to suggest courses and can check linked sources for more detail. A book title alone does not prove what it teaches.
 
-The public catalog includes course names, book details, dates and source links. It does not include saved university descriptions, source excerpts or textbooks.
+Topclass uses the [MIT license](docs/LICENSE). The book finder retains its [license](scripts/finder/LICENSE) and [source record](scripts/finder/origin.json). The [source notice](data/NOTICE.md) explains the catalog's attribution and limits.
 
-Your agent can check the linked sources when needed and permitted. It must not invent course content from a title. The catalog is incomplete. Older records do not prove that a university still uses a book.
+## Repository files
 
-Clean installation checks passed for Codex and Claude on all three operating systems. Those checks do not prove that every book is available or that every AI app loads skills in the same way.
-
-## License
-
-Topclass code uses the [MIT license](docs/LICENSE). The included book finder keeps its [license](scripts/finder/LICENSE) and [source record](scripts/finder/origin.json).
-
-Source links credit the universities and book providers. No university endorses Topclass. Read the [source notice](data/NOTICE.md).
+- `data/` contains the course catalog.
+- `docs/` contains the guides, agent instructions, and license.
+- `scripts/` contains the code, launchers, and dependencies.
+- `.gitignore` excludes private files and generated files from normal commits.
 '''
 
 PUBLIC_AGENTS = '''# Topclass agent instructions
