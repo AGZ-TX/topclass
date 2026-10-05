@@ -1,0 +1,77 @@
+{
+  "name": "search",
+  "version": "1.1.0",
+  "description": "One MCP server for Anna's Archive, Library Genesis, Sci-Hub, and Z-Library. Search books and papers, resolve download links, and fetch files \u2014 across all shadow libraries through a single unified interface.",
+  "type": "module",
+  "bin": {
+    "search-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "author": "Yashar Mahmoudi <yashar.mahmudi@gmail.com> (https://github.com/yashimosh)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AGZ-TX/search.git"
+  },
+  "homepage": "https://github.com/AGZ-TX/search",
+  "bugs": {
+    "url": "https://github.com/AGZ-TX/search/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "search": "python3 search.py",
+    "test:search": "npm run build && python3 -m unittest discover -s tests -p test_search_flow.py",
+    "start:browser": "BIBLIO_FETCH_MODE=browser node dist/index.js",
+    "smoke": "tsx scripts/smoke.ts",
+    "prepublishOnly": "npm run build",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "test:browser": "npm run build && node --test tests/browser-session.integration.mjs",
+    "benchmark": "npm run build && node scripts/benchmark.mjs",
+    "browser-setup": "npm run build && node scripts/browser-setup.mjs"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "annas-archive",
+    "libgen",
+    "library-genesis",
+    "sci-hub",
+    "zlibrary",
+    "books",
+    "ebook",
+    "papers",
+    "academic-papers",
+    "book-search",
+    "paper-search",
+    "pdf-download",
+    "doi",
+    "open-access",
+    "claude",
+    "cursor",
+    "cline",
+    "ai-tools"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.31.0",
+    "cheerio": "1.0.0",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.9",
+    "tsx": "4.23.15",
+    "typescript": "5.5.3"
+  },
+  "private": true,
+  "optionalDependencies": {
+    "playwright": "1.63.0"
+  }
+}
