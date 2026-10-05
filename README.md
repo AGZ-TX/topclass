@@ -4,7 +4,7 @@ Give your AI agent useful books for the work you need.
 
 Tell the agent its purpose. It suggests university courses and books. You choose the courses on a web page. Topclass then finds available books and makes them searchable for that agent.
 
-This is a fun, experimental project. It does not train a new AI model or give your agent a degree.
+This is a fun, experimental project that helps agents "remember what they learned in school".
 
 ## Start with your agent
 
