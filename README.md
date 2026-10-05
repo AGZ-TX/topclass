@@ -83,6 +83,6 @@ Source links credit the universities and book providers. No university endorses 
 
 ## Files
 
-`data/` holds the catalog. `docs/` holds guides, agent instructions, the license and security policy. `scripts/` holds the code, launchers and dependency list. `.gitignore` keeps private files and generated files out of normal commits.
+`data/` holds the catalog. `docs/` holds guides, agent instructions, and the license. `scripts/` holds the code, launchers and dependency list. `.gitignore` keeps private files and generated files out of normal commits.
 
 After updating an older checkout, use `./scripts/topclass` (Windows: `.\scripts\topclass.cmd`) and refresh previously installed skills using [the setup guide](docs/setup.md).

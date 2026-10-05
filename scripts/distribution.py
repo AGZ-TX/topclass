@@ -185,7 +185,7 @@ def export(destination, root=ROOT, catalog=None):
         paths.extend(root / name for name in tracked if name)
         paths.extend(root / name for name in ('scripts/topclass', 'scripts/topclass.cmd', 'docs/LICENSE', '.gitignore',
                                               'data/.gitattributes', 'docs/.gitattributes', 'scripts/.gitattributes',
-                                              'scripts/requirements.txt', 'docs/SECURITY.md'))
+                                              'scripts/requirements.txt'))
         paths.extend(root / ('scripts/' + name + '.py') for name in ('topclass', 'source_pipeline', 'source_index',
             'source_retrieval', 'source_education', 'provider_runtime', 'book_search', 'education_graph', 'education_planner', 'gemini_education'))
         paths.extend(root / ('scripts/tests/' + name) for name in ('test_course_choices.py', 'test_layout.py'))
