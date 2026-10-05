@@ -173,7 +173,7 @@ def pipeline_status(home, agent_id):
         counts[job["state"]] = counts.get(job["state"], 0) + 1
     return {"agent_id": agent_id, "states": counts, "queue": str(path), "reader_model": None,
             "embedding_model": "gemini-embedding-2", "google_configured": child(home, ".google.json").is_file(),
-            "jobs": [{key: job.get(key) for key in ("id", "title", "state", "source_id", "reason", "next_attempt_at", "coverage")} for job in queue["jobs"].values()]}
+            "jobs": [{key: job.get(key) for key in ("id", "title", "state", "source_id", "reason", "next_attempt_at", "coverage", "progress", "semantic_graph")} for job in queue["jobs"].values()]}
 
 
 def progress_message(progress):
@@ -243,8 +243,12 @@ def run_worker(home, agent_id, loop=True, max_seconds=None):
                         tid = native_outline(graph, sid)
                         replace_json(child(child(folder, "pageindex"), sid.split(":")[1] + ".json"), {
                             "tree_id": tid, **document_tree(graph, tid)})
+                    def saved_progress(value):
+                        job["progress"] = value
+                        update_job(home, queue_path, job)
+
                     with google_provider(home, graph) as provider:
-                        result = index_originals(graph, provider, [sid])
+                        result = index_originals(graph, provider, [sid], progress=saved_progress)
                         job["coverage"] = {key: result[key] for key in ("complete_nodes", "incomplete_nodes", "eligible_nodes", "space", "visual_coverage")}
                         job["usage"] = result["usage"]
                         if result["indexed"] or not result["incomplete_nodes"]:

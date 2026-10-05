@@ -6,6 +6,14 @@ Set up a user-owned Google key once. Describe the agent's purpose in `/hire`, re
 
 The host handles commands and setup details. Users do not need to register sources, build graphs, copy ISBNs, choose a reading model or manage embedding batches. Book availability and Google quota still determine how much can finish. Missing books and incomplete indexing stay visible.
 
+## How retrieval works
+
+Google Embedding 2 turns original passage units and page images into numeric vectors. A question gets a vector in the same space; similarity search uses those vectors to find relevant source regions even when the words differ. Topclass retains the originals and links results back to them. This adds private reference memory; it does not train the agent's underlying model.
+
+The page index records native document sections and physical page locations, with page-based navigation when no outline exists. The agent can open the exact page, surrounding text, and diagrams to verify an answer. This is Topclass's native page navigation, not a separate AI PageIndex service.
+
+The semantic graph links sources, sections, pages, and retrieval units. It also connects highly similar passages using embedding similarity. These are candidate navigation links, not extracted facts, proof of agreement, or a reasoning model. The agent still reads the retrieved evidence and checks its context before answering.
+
 ## One-time Google setup
 
 Install `requirements-education.txt` in the Python environment used by Topclass, and prepare the connected [book search](books.md). Then use a hidden prompt:
@@ -54,9 +62,9 @@ If Google cannot embed the query, `/recall` reports the semantic gap and retains
 
 Source text is untrusted evidence. It cannot execute code, install hooks or become privileged instructions. The agent reads the retrieved passage when answering, checks relevance and conditions, and cites its location. Full embedding coverage proves indexing coverage, not complete understanding, professional competence, or reliable answers to every question.
 
-Tests cover automatic hire/search and `/add` handoffs, private ownership, key permissions, complete text and real PDF image parts, malformed batch rejection, resumable budgets and deferrals, native outline navigation, stale-source rejection, candidate semantic edges and semantic `/recall`. Fixture tests use fake providers. Live book coverage and retrieval results are reported separately in the original indexing trial.
+Tests cover automatic hire/search and `/add` handoffs, private ownership, key permissions, complete text and real PDF image parts, malformed batch rejection, resumable budgets and deferrals, native outline navigation, stale-source rejection, candidate semantic edges and semantic `/recall`. Fixture tests use fake providers. Live book coverage and retrieval results are reported separately in [the original indexing trial](reports/original-index-trial.md).
 
-See the five-library trial for actual fresh-agent answers, coverage, output sizes and remaining gaps.
+See [the five-library trial](reports/recall.md) for actual fresh-agent answers, coverage, output sizes and remaining gaps.
 
 ## Review and focused expansion
 
@@ -66,4 +74,12 @@ Use `./topclass recall --agent AGENT_ID --source SOURCE_ID --section NODE_ID` fo
 
 Use `./topclass recall --agent AGENT_ID --region REGION_ID --visual` to render a PDF page from its original at three pixels per point. Add `--crop X0 Y0 X1 Y1` in original page coordinates for tiny chart labels or equations. This reads the original PDF rather than enlarging the saved thumbnail; pixel limits keep requests bounded. Raster-only source figures retain their actual available detail. No renderer or embedding model can recover information absent from the supplied source.
 
-Retained HTML figures from older captured sections are automatically registered when that source is explicitly indexed again. Completed unrelated sources and other agents are not silently re-embedded. Existing private indices are preserved. See the single-agent review for checks and limits.
+Retained HTML figures from older captured sections are automatically registered when that source is explicitly indexed again. Completed unrelated sources and other agents are not silently re-embedded. Existing private indices are preserved. See [the single-agent review](reports/memory.md) for checks and limits.
+
+## Live processing page
+
+`./topclass live --agent AGENT_ID` opens a read-only, agent-scoped service on an ephemeral localhost port. Open its printed URL to view the current canonical education page in processing mode. Author and validate that page with `check` first; older pages must be rebuilt from their saved planner data and profile. The service does not select courses, acquire books, start workers, or resume unrelated queues. Use the normal confirmed-book or `/add` workflow to start work.
+
+The page polls the private service automatically. The URL contains a random access token; keep it private and stop the service with Ctrl-C when finished. The server binds only to 127.0.0.1, checks Host and Origin, refuses cross-site browser reads, disables caching and framing, and exposes only the selected agent's page and status. It serves no filesystem paths, originals, or credentials. Detailed failure reasons remain in private CLI status because provider errors may contain private paths.
+
+Progress counts embedding units, which can differ from physical pages. The indexer publishes counts after each committed batch, including valid vectors reused on resume. Totals remain unknown before source preparation. Full vector coverage does not mark a running job complete: the worker must finish final coverage and similarity links. Deferred, failed, unsupported, excluded and empty states remain visible. A disconnected page retains its last confirmed counts and explicitly reports the connection failure. Multiple jobs are explicitly labeled; the current view displays the first job.

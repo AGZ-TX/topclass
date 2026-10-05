@@ -431,11 +431,13 @@ def main(argv=None):
     p.add_argument('--name')
     p.add_argument('--baseline-only', action='store_true')
     sub.add_parser('agents', help='List agent IDs and names')
-    for name in ('status', 'catalog', 'browse', 'inspect', 'plan', 'select', 'find-books', 'check-html', 'add', 'recall', 'work', 'review'):
+    for name in ('status', 'catalog', 'browse', 'inspect', 'plan', 'select', 'find-books', 'check-html', 'add', 'recall', 'work', 'review', 'live'):
         aliases = {'find-books': ['books'], 'check-html': ['check']}.get(name, [])
         p = sub.add_parser(name, aliases=aliases)
         p.add_argument('--agent', required=True, help='Agent ID; there is no shared default memory')
-        if name == 'plan':
+        if name == 'live':
+            p.add_argument('--port', type=int, default=0)
+        elif name == 'plan':
             p.add_argument('--brief', type=Path)
             p.add_argument('--proposal', type=Path, help='AI-authored course choices, priorities, and source reviews')
         elif name == 'browse':
@@ -535,6 +537,10 @@ def main(argv=None):
             result = {'agent_id': args.agent, **review(graph)}
         finally:
             graph.close()
+    elif args.command == 'live':
+        from core.live import serve
+        serve(args.home, args.agent, args.port)
+        return 0
     elif args.command == 'work':
         from core.pipeline import run_worker
         result = run_worker(args.home, args.agent)

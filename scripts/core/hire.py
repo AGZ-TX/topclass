@@ -19,9 +19,9 @@ def agent_plan(library, brief, agent, proposal=None):
     kinds = {requirement: kind for kind, requirement in requirements}
     selected, alternatives, seen = [], [], set()
     for choice in proposal['courses']:
-        if not isinstance(choice, dict) or set(choice) != {'course_id', 'priority', 'reviews'}:
-            raise ValueError('Each AI choice needs course_id, priority and source-anchored reviews')
-        key, priority, reviews = choice['course_id'], choice['priority'], choice['reviews']
+        if not isinstance(choice, dict) or set(choice) not in ({'course_id', 'reviews'}, {'course_id', 'priority', 'reviews'}):
+            raise ValueError('Each AI choice needs course_id and source-anchored reviews')
+        key, priority, reviews = choice['course_id'], choice.get('priority', 'must-have'), choice['reviews']
         if not isinstance(key, str) or key in seen or priority not in ('must-have', 'supplemental', 'alternative'):
             raise ValueError('Unknown priority or duplicate course choice')
         seen.add(key)
